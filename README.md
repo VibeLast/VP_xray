@@ -51,13 +51,19 @@
 - **CPU**: 1 ядро (рекомендуется 2+)
 
 > [!IMPORTANT]
-> **Установка:**
+> **Установка v2.0 (с HAPP-подпиской):**
 >
 > ```
-> wget -qO- https://raw.githubusercontent.com/VibeLast/VP_xray/main/install.sh | sudo bash
+> wget -qO- https://raw.githubusercontent.com/VibeLast/VP_xray/feature/happ-subscription-server/install.sh | sudo bash
 > ```
 >
 > или
+>
+> ```
+> curl -fsSL https://raw.githubusercontent.com/VibeLast/VP_xray/feature/happ-subscription-server/install.sh | sudo bash
+> ```
+>
+> **Установка v1.x (без подписки, стабильная):**
 >
 > ```
 > curl -fsSL https://raw.githubusercontent.com/VibeLast/VP_xray/main/install.sh | sudo bash
