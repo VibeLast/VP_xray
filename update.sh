@@ -3,7 +3,7 @@
 # ═══════════════════════════════════════════════════════════
 # XRAYEBATOR UPDATE SCRIPT v1.3.1 FINAL
 # Обновление Xrayebator до последней версии
-# GitHub: https://github.com/howdeploy/Xrayebator
+# GitHub: https://github.com/VibeLast/VP_xray
 # ═══════════════════════════════════════════════════════════
 
 # Цвета
@@ -16,8 +16,8 @@ MAGENTA='\033[0;35m'
 NC='\033[0m'
 
 # GitHub репозиторий
-GITHUB_USER="howdeploy"
-GITHUB_REPO="Xrayebator"
+GITHUB_USER="VibeLast"
+GITHUB_REPO="VP_xray"
 
 # Проверка прав root
 if [[ $EUID -ne 0 ]]; then

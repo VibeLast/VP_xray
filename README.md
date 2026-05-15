@@ -54,13 +54,13 @@
 > **Установка:**
 >
 > ```
-> wget -qO- https://raw.githubusercontent.com/howdeploy/Xrayebator/main/install.sh | sudo bash
+> wget -qO- https://raw.githubusercontent.com/VibeLast/VP_xray/main/install.sh | sudo bash
 > ```
 >
 > или
 >
 > ```
-> curl -fsSL https://raw.githubusercontent.com/howdeploy/Xrayebator/main/install.sh | sudo bash
+> curl -fsSL https://raw.githubusercontent.com/VibeLast/VP_xray/main/install.sh | sudo bash
 > ```
 
 > [!IMPORTANT]
@@ -234,7 +234,7 @@ Ctrl + O, Enter, Ctrl + X
 #### Я вроде обновил, но не обновилось
 
 Принудительно скачайте update.sh и запустите его, чтобы подтянуть финальные версии файлов из репозитория.
-`sudo curl -fsSL https://raw.githubusercontent.com/howdeploy/Xrayebator/experimental/update.sh \
+`sudo curl -fsSL https://raw.githubusercontent.com/VibeLast/VP_xray/experimental/update.sh \
   -o /usr/local/etc/xray/scripts/update.sh`
  `sudo chmod +x /usr/local/etc/xray/scripts/update.sh`
  `sudo /usr/local/etc/xray/scripts/update.sh`
@@ -262,21 +262,6 @@ Ctrl + O, Enter, Ctrl + X
 - [AdGuardTeam/AdGuardHome](https://github.com/AdguardTeam/AdGuardHome) — за DNS-фильтрацию рекламы
 
 - Моему сообществу за поддержку на протяжении этих лет, без вас бы помер и не вайбкодил
-
----
-
-### Поддержка проекта
-
-Если пригодилось, то поставьте звезду на GitHub! Не знаю зачем они мне, но давайте.
-
-**Также можно подкинуть деньгу на эти адреса:**
-
-EVM: `0x7acE4442b92f2769c24484c78A13024B139E1A5b`
-Solana: `FS9RBrG5yXJty3WNWgkBkfai6BfNoYxGMFeH1LQEpRZr`
-TON: `UQA56zsOv3zvU5x-p7iNNDL8jHh9dt7Q7WlY_gfbaj4ZhcyT`
-BTC: `34EznmkBGpBu4dUnzoHL5GBnpg2Rq86v4H`
-
-> Вы не иронично можете помочь, поддержав бессоные ночи за вайбкодом любой копеечкой. Верю в солидарность и поддержку гражданского общества.
 
 ---
 

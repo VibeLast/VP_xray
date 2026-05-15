@@ -2,7 +2,7 @@
 
 # ═══════════════════════════════════════════════════════════
 # XRAYEBATOR v1.3.2 EXP - Xray Reality VPN Manager
-# GitHub: https://github.com/howdeploy/Xrayebator
+# GitHub: https://github.com/VibeLast/VP_xray
 # License: MIT
 # Экспериментальная версия с исправлениями маршрутизации
 # ═══════════════════════════════════════════════════════════
@@ -786,7 +786,7 @@ SERVER_IP=$(get_server_ip)
 # Показать ASCII арт
 show_ascii() {
   clear
-  local ASCII_URL="https://raw.githubusercontent.com/howdeploy/Xrayebator/main/ascii_art.txt"
+  local ASCII_URL="https://raw.githubusercontent.com/VibeLast/VP_xray/main/ascii_art.txt"
   if [[ ! -f "$ASCII_ART" ]]; then
     mkdir -p "$(dirname "$ASCII_ART")"
     curl -fsSL "$ASCII_URL" -o "$ASCII_ART" 2>/dev/null || true

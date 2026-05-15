@@ -1,9 +1,8 @@
 #!/bin/bash
 
 # ═══════════════════════════════════════════════════════════
-# XRAYEBATOR INSTALLER v1.3.2 EXP
 # Автоматическая установка Xray Reality VPN
-# GitHub: https://github.com/howdeploy/Xrayebator
+# GitHub: https://github.com/VibeLast/VP_xray
 # ═══════════════════════════════════════════════════════════
 
 # Цвета
@@ -16,8 +15,8 @@ MAGENTA='\033[0;35m'
 NC='\033[0m'
 
 # GitHub репозиторий
-GITHUB_USER="howdeploy"
-GITHUB_REPO="Xrayebator"
+GITHUB_USER="VibeLast"
+GITHUB_REPO="VP_xray"
 GITHUB_BRANCH="experimental"
 RAW_BASE_URL="https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}"
 
@@ -39,8 +38,7 @@ clear
 echo -e "${CYAN}"
 echo '╔═══════════════════════════════════════════════════════════╗'
 echo '║                                                           ║'
-echo '║            XRAYEBATOR INSTALLER v1.3.2 EXP               ║'
-echo '║       Автоматическая установка Xray Reality VPN          ║'
+echo '║       Автоматическая установка Xray Reality VPN           ║'
 echo '║                                                           ║'
 echo '╚═══════════════════════════════════════════════════════════╝'
 echo -e "${NC}\n"
