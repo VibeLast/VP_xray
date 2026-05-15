@@ -878,9 +878,6 @@ main_menu() {
       dev)
         echo -e "${BLUE}[Dev]${NC} Версия с быстрыми фиксами"
         ;;
-      experimental)
-        echo -e "${MAGENTA}[Experimental]${NC} Экспериментальная версия"
-        ;;
     esac
     echo ""
 

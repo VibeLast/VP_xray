@@ -234,7 +234,7 @@ Ctrl + O, Enter, Ctrl + X
 #### Я вроде обновил, но не обновилось
 
 Принудительно скачайте update.sh и запустите его, чтобы подтянуть финальные версии файлов из репозитория.
-`sudo curl -fsSL https://raw.githubusercontent.com/VibeLast/VP_xray/experimental/update.sh \
+`sudo curl -fsSL https://raw.githubusercontent.com/VibeLast/VP_xray/main/update.sh \
   -o /usr/local/etc/xray/scripts/update.sh`
  `sudo chmod +x /usr/local/etc/xray/scripts/update.sh`
  `sudo /usr/local/etc/xray/scripts/update.sh`
@@ -262,7 +262,7 @@ Ctrl + O, Enter, Ctrl + X
 - [AdGuardTeam/AdGuardHome](https://github.com/AdguardTeam/AdGuardHome) — за DNS-фильтрацию рекламы
 
 - Моему сообществу за поддержку на протяжении этих лет, без вас бы помер и не вайбкодил
-
+ы
 ---
 
 **Сделано для свободного интернета**

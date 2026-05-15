@@ -17,7 +17,7 @@ NC='\033[0m'
 # GitHub репозиторий
 GITHUB_USER="VibeLast"
 GITHUB_REPO="VP_xray"
-GITHUB_BRANCH="experimental"
+GITHUB_BRANCH="main"
 RAW_BASE_URL="https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}"
 
 # Пути

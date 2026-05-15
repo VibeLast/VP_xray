@@ -87,18 +87,9 @@ else
   echo -e "   ${YELLOW}⚠${NC} Может содержать мелкие баги"
   echo ""
 
-  echo -e "${MAGENTA}╔════════════════════════════════════════════════════════════╗${NC}"
-  echo -e "${MAGENTA}║  3) Experimental - Экспериментальная (для тестирования)    ║${NC}"
-  echo -e "${MAGENTA}╚════════════════════════════════════════════════════════════╝${NC}"
-  echo -e "   ${CYAN}→${NC} Новые функции и альфа-фичи"
-  echo -e "   ${CYAN}→${NC} Автоподбор связок, расширенная диагностика"
-  echo -e "   ${CYAN}→${NC} Обновления несколько раз в неделю"
-  echo -e "   ${RED}⚠${NC} Может быть нестабильной!"
-  echo ""
-
   echo -e "${CYAN}  0)${NC} Отмена\n"
 
-  echo -n -e "${YELLOW}Ваш выбор [1-3]: ${NC}"
+  echo -n -e "${YELLOW}Ваш выбор [1-2]: ${NC}"
   read branch_choice
 
   case $branch_choice in
@@ -111,11 +102,6 @@ else
       GITHUB_BRANCH="dev"
       VERSION_NAME="Dev"
       VERSION_COLOR="${BLUE}"
-      ;;
-    3)
-      GITHUB_BRANCH="experimental"
-      VERSION_NAME="Experimental"
-      VERSION_COLOR="${MAGENTA}"
       ;;
     0)
       echo -e "${CYAN}Отменено${NC}"
@@ -142,10 +128,6 @@ if [[ -z "$VERSION_NAME" ]]; then
       VERSION_NAME="Dev"
       VERSION_COLOR="${BLUE}"
       ;;
-    experimental)
-      VERSION_NAME="Experimental"
-      VERSION_COLOR="${MAGENTA}"
-      ;;
   esac
 fi
 
@@ -155,20 +137,14 @@ echo ""
 echo -e "${BLUE}Обновление до версии: ${VERSION_COLOR}${VERSION_NAME}${NC}"
 echo -e "${BLUE}Ветка GitHub: ${VERSION_COLOR}${GITHUB_BRANCH}${NC}\n"
 
-# Предупреждение для experimental/dev (показываем один раз)
+# Предупреждение для dev (показываем один раз)
 if [[ "$GITHUB_BRANCH" != "main" ]] && [[ ! -f "$UPDATE_SESSION_FILE.warned" ]]; then
   echo -e "${YELLOW}╔═══════════════════════════════════════════════════════════╗${NC}"
   echo -e "${YELLOW}║                    ⚠ ВНИМАНИЕ ⚠                          ║${NC}"
   echo -e "${YELLOW}╚═══════════════════════════════════════════════════════════╝${NC}"
   echo -e "${YELLOW}Вы устанавливаете ${VERSION_COLOR}${VERSION_NAME}${YELLOW} версию.${NC}"
-
-  if [[ "$GITHUB_BRANCH" == "experimental" ]]; then
-    echo -e "${RED}Эта версия может содержать критические баги!${NC}"
-    echo -e "${YELLOW}Используйте только для тестирования.${NC}"
-  else
-    echo -e "${YELLOW}Эта версия содержит свежие исправления.${NC}"
-    echo -e "${CYAN}При проблемах откатитесь на Stable.${NC}"
-  fi
+  echo -e "${YELLOW}Эта версия содержит свежие исправления.${NC}"
+  echo -e "${CYAN}При проблемах откатитесь на Stable.${NC}"
 
   echo ""
   echo -n -e "${YELLOW}Продолжить установку? (y/N): ${NC}"
@@ -430,16 +406,6 @@ case $GITHUB_BRANCH in
     echo -e "${BLUE}═══════════════════════════════════════════════════════════${NC}"
     echo -e "  ${GREEN}✓${NC} Свежие исправления"
     echo -e "  ${YELLOW}⚠${NC} Для отката: sudo xrayebator-update → Stable"
-    ;;
-  experimental)
-    echo -e "${MAGENTA}═══════════════════════════════════════════════════════════${NC}"
-    echo -e "${MAGENTA}  ⚡ Experimental версия установлена${NC}"
-    echo -e "${MAGENTA}═══════════════════════════════════════════════════════════${NC}"
-    echo -e "  ${GREEN}✓${NC} Автоподбор связок с динамическими портами"
-    echo -e "  ${GREEN}✓${NC} Индивидуальная настройка SNI/fingerprint"
-    echo -e "  ${GREEN}✓${NC} Расширенная диагностика"
-    echo -e "  ${RED}⚠${NC} Тестовая версия!"
-    echo -e "  ${YELLOW}Для отката: sudo xrayebator-update → Stable${NC}"
     ;;
 esac
 
