@@ -2,7 +2,7 @@
 
 # ═══════════════════════════════════════════════════════════
 # XRAYEBATOR v2.0 - Xray Reality VPN Manager
-# GitHub: https://github.com/howdeploy/Xrayebator
+# GitHub: https://github.com/VibeLast/VP_xray
 # License: MIT
 # HAPP subscription + multi-route profile release
 # ═══════════════════════════════════════════════════════════
@@ -2043,7 +2043,7 @@ fi
 # Показать ASCII арт
 show_ascii() {
   clear
-  local ASCII_URL="https://raw.githubusercontent.com/howdeploy/Xrayebator/main/ascii_art.txt"
+  local ASCII_URL="https://raw.githubusercontent.com/VibeLast/VP_xray/feature/happ-subscription-server/ascii_art.txt"
   if [[ ! -f "$ASCII_ART" ]]; then
     mkdir -p "$(dirname "$ASCII_ART")"
     curl -fsSL "$ASCII_URL" -o "$ASCII_ART" 2>/dev/null || true
@@ -2514,8 +2514,8 @@ HAPP_DEFAULTS=/usr/local/etc/xray/.happ_defaults.env
 
 # Fallback-defaults если .happ_defaults.env отсутствует или не задаёт переменную.
 HAPP_PROFILE_UPDATE_INTERVAL="${HAPP_PROFILE_UPDATE_INTERVAL:-24}"
-HAPP_SUPPORT_URL="${HAPP_SUPPORT_URL:-https://github.com/howdeploy/Xrayebator}"
-HAPP_WEB_URL="${HAPP_WEB_URL:-https://github.com/howdeploy/Xrayebator}"
+HAPP_SUPPORT_URL="${HAPP_SUPPORT_URL:-https://github.com/VibeLast/VP_xray}"
+HAPP_WEB_URL="${HAPP_WEB_URL:-https://github.com/VibeLast/VP_xray}"
 HAPP_ANNOUNCE_FILE="${HAPP_ANNOUNCE_FILE:-/usr/local/etc/xray/announce.txt}"
 HAPP_ROUTING_JSON_FILE="${HAPP_ROUTING_JSON_FILE:-/usr/local/etc/xray/.happ_routing.json}"
 
@@ -2724,10 +2724,10 @@ SUBHTTP_EOF
 # (синтаксис shell, любые BASH-совместимые конструкции).
 
 # URL поддержки (HAPP импортирует, кликабельно у юзера в клиенте):
-HAPP_SUPPORT_URL="https://github.com/howdeploy/Xrayebator"
+HAPP_SUPPORT_URL="https://github.com/VibeLast/VP_xray"
 
 # URL веб-страницы профиля (HAPP покажет в info клиента):
-HAPP_WEB_URL="https://github.com/howdeploy/Xrayebator"
+HAPP_WEB_URL="https://github.com/VibeLast/VP_xray"
 
 # Интервал автообновления подписки в часах (HAPP читает как hint):
 HAPP_PROFILE_UPDATE_INTERVAL=24
@@ -2753,7 +2753,7 @@ HAPP_DEFAULTS_EOF
   cat > /etc/systemd/system/xrayebator-sub.service << 'SUBUNIT_EOF'
 [Unit]
 Description=Xrayebator HAPP subscription handler (socat + subhttp.sh)
-Documentation=https://github.com/howdeploy/Xrayebator
+Documentation=https://github.com/VibeLast/VP_xray
 After=network-online.target xray.service
 Wants=network-online.target
 
