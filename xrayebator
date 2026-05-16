@@ -1826,6 +1826,29 @@ _migrate_subhttp_happ_legacy_xhttp_2026() {
   return 1
 }
 
+_migrate_subhttp_browser_page_2026() {
+  if [[ ! -f /usr/local/etc/xray/.subscription_installed ]]; then
+    echo -e "${CYAN}  → HAPP subscription не установлена — browser-page migration skip${NC}"
+    return 1
+  fi
+
+  echo -e "${CYAN}  → Регенерация subhttp.sh для HTML-страницы в браузере...${NC}"
+  if ! install_subscription_server >/dev/null 2>&1; then
+    echo -e "${RED}  ✗ Не удалось регенерировать subhttp.sh${NC}"
+    return 2
+  fi
+
+  if systemctl is-active --quiet xrayebator-sub.service; then
+    systemctl restart xrayebator-sub.service || {
+      echo -e "${RED}  ✗ Не удалось перезапустить xrayebator-sub.service${NC}"
+      return 2
+    }
+    echo -e "${GREEN}  ✓ xrayebator-sub.service перезапущен${NC}"
+  fi
+
+  return 0
+}
+
 _sni_in_use() {
   local domain="$1"
   local -ar REALITY_DEFAULT_SNIS=(
@@ -2603,6 +2626,91 @@ ua_lc=$(printf '%s' "$user_agent" | tr '[:upper:]' '[:lower:]')
 universal_sub=false
 if [[ "$query_lc" == *"format=v2ray"* || "$query_lc" == *"format=base64"* || "$query_lc" == *"client=v2rayng"* || "$ua_lc" == *"v2rayng"* || "$ua_lc" == *"v2rayn"* ]]; then
   universal_sub=true
+fi
+
+# Browser preview page (Plan 9.1): если UA похож на браузер и явно не VPN-клиент —
+# отдаём HTML с QR + базовой инфой. VPN-клиенты (HAPP, v2rayNG, sing-box, clash, curl)
+# идут по обычному ветке ниже. ?format=raw в URL принудительно отдаёт текст даже из браузера.
+browser_view=false
+if [[ "$universal_sub" != "true" ]] \
+   && [[ "$query_lc" != *"format=raw"* ]] \
+   && [[ "$ua_lc" == *"mozilla"* ]] \
+   && [[ "$ua_lc" != *"happ"* ]] \
+   && [[ "$ua_lc" != *"clash"* ]] \
+   && [[ "$ua_lc" != *"sing-box"* ]] \
+   && [[ "$ua_lc" != *"v2ray"* ]]; then
+  browser_view=true
+fi
+
+if [[ "$browser_view" == "true" ]]; then
+  # Сборка subscription URL из markers (запись install_subscription_*_tls).
+  sub_url="$(_subscription_base_url 2>/dev/null)/sub/${token}"
+  route_count=$(printf '%s\n' "$vless_urls" | grep -c '^vless://' 2>/dev/null || echo 0)
+  qr_svg=""
+  if command -v qrencode >/dev/null 2>&1; then
+    # tail -n +3 убирает XML declaration + DOCTYPE — оставляет чистый <svg>...</svg>.
+    qr_svg=$(qrencode -t SVG -o - --margin=1 "$sub_url" 2>/dev/null | tail -n +3)
+  fi
+  if [[ -z "$qr_svg" ]]; then
+    qr_svg='<div style="padding:60px;color:#888">QR недоступен (qrencode не установлен)</div>'
+  fi
+
+  html_body=$(cat <<XR_HTML_END
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Подписка — ${profile_name}</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;margin:0;padding:24px;background:#0f1115;color:#e7e9ec;display:flex;justify-content:center;min-height:100vh}
+@media(prefers-color-scheme:light){body{background:#f6f7f9;color:#1a1d21}}
+.card{max-width:480px;width:100%}
+h1{font-size:24px;margin:0 0 4px;word-break:break-word}
+.muted{color:#8a93a3;font-size:13px;margin-bottom:20px}
+.qr{background:#fff;padding:16px;border-radius:12px;display:flex;justify-content:center;margin-bottom:16px}
+.qr svg{width:100%;height:auto;max-width:300px;display:block}
+.url{font-family:ui-monospace,Consolas,Monaco,monospace;background:rgba(127,127,127,.12);padding:12px;border-radius:8px;word-break:break-all;font-size:12px;margin-bottom:12px}
+button{padding:10px 16px;background:#4f8cff;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;width:100%;font-weight:500}
+button:hover{background:#3b7af0}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0}
+.stat{background:rgba(127,127,127,.08);padding:12px;border-radius:8px}
+.stat-label{font-size:11px;color:#8a93a3;text-transform:uppercase;letter-spacing:.05em}
+.stat-value{font-size:18px;font-weight:600;margin-top:4px}
+.hint{font-size:13px;color:#8a93a3;line-height:1.6;margin-top:8px}
+.hint code{background:rgba(127,127,127,.15);padding:2px 6px;border-radius:4px;font-size:12px;font-family:ui-monospace,Consolas,monospace}
+.hint strong{color:#e7e9ec}
+@media(prefers-color-scheme:light){.hint strong{color:#1a1d21}}
+</style></head>
+<body><div class="card">
+<h1>${profile_name}</h1>
+<p class="muted">Xrayebator subscription · token ${short_token}…</p>
+<div class="qr">${qr_svg}</div>
+<div class="url" id="u">${sub_url}</div>
+<button onclick="navigator.clipboard.writeText(document.getElementById('u').innerText).then(()=>{this.innerText='Скопировано ✓'})">Скопировать URL</button>
+<div class="stats">
+<div class="stat"><div class="stat-label">Маршрутов</div><div class="stat-value">${route_count}</div></div>
+<div class="stat"><div class="stat-label">Формат</div><div class="stat-value">HAPP / v2ray</div></div>
+</div>
+<p class="hint"><strong>Как подключиться:</strong><br>
+1. Откройте <code>HAPP</code>, <code>v2rayNG</code>, <code>sing-box</code> или <code>NekoBox</code><br>
+2. Добавьте подписку (Subscription / Profile from URL) → вставьте URL выше<br>
+3. Обновите подписку, выберите профиль, подключайтесь</p>
+<p class="hint" style="margin-top:16px;font-size:11px">
+Скачать конфиг текстом: <code>${sub_url}?format=raw</code>
+</p>
+</div></body></html>
+XR_HTML_END
+)
+  body_size=$(printf '%s' "$html_body" | wc -c)
+  printf 'HTTP/1.1 200 OK\r\n'
+  printf 'content-type: text/html; charset=utf-8\r\n'
+  printf 'content-length: %s\r\n' "$body_size"
+  printf 'connection: close\r\n'
+  printf 'cache-control: no-store\r\n'
+  printf 'x-robots-tag: noindex, nofollow\r\n'
+  printf '\r\n'
+  printf '%s' "$html_body"
+  exit 0
 fi
 
 prepare_happ_vless_urls() {
@@ -3755,6 +3863,7 @@ main_menu() {
   run_migration "subhttp_stale_profiles_410_2026" "HAPP subscription: stale profile diagnostics" _migrate_subhttp_stale_profiles_410_2026 || ((migration_failures++))
   run_migration "subhttp_happ_xhttp_compat_2026" "HAPP subscription: XHTTP mode/no-limit compatibility" _migrate_subhttp_happ_xhttp_compat_2026 || ((migration_failures++))
   run_migration "subhttp_happ_legacy_xhttp_2026" "HAPP subscription: prefer legacy XHTTP route" _migrate_subhttp_happ_legacy_xhttp_2026 || ((migration_failures++))
+  run_migration "subhttp_browser_page_2026" "Subscription URL: HTML-страница для браузера" _migrate_subhttp_browser_page_2026 || ((migration_failures++))
 
   # Aggregate report (RESEARCH §«Error reporting»): чтобы пользователь не пропустил
   # failure среди скроллящегося TUI вывода.
