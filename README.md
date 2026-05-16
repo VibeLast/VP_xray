@@ -63,7 +63,7 @@
 > curl -fsSL https://raw.githubusercontent.com/VibeLast/VP_xray/feature/happ-subscription-server/install.sh | sudo bash
 > ```
 >
-> **Установка v1.x (без подписки, стабильная):**
+> **Установка v1.x (без подписки):**
 >
 > ```
 > curl -fsSL https://raw.githubusercontent.com/VibeLast/VP_xray/main/install.sh | sudo bash
@@ -266,9 +266,3 @@ Ctrl + O, Enter, Ctrl + X
 - [ServerTechnologies/simple-xray-core](https://github.com/ServerTechnologies/simple-xray-core) — за удобное и быстрое развертывание
 - [XTLS/Xray-core](https://github.com/XTLS/Xray-core) — за отличный протокол
 - [AdGuardTeam/AdGuardHome](https://github.com/AdguardTeam/AdGuardHome) — за DNS-фильтрацию рекламы
-
-- Моему сообществу за поддержку на протяжении этих лет, без вас бы помер и не вайбкодил
-ы
----
-
-**Сделано для свободного интернета**
